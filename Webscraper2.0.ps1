@@ -9,11 +9,10 @@ Function GetRank([string]$rankSearchString, $data)
             Return $rankSplitChild[-1]
         }
     }
-    Return 100
+    Return ''
 }
 
-$import = Import-Csv "Tracker Links - RLTN Links.csv" -header Name, Tracker, S9_1s_MMR, S9_1s_GP, 
-    S9_2s_MMR, S9_2s_GP, S9_Solo_3s_MMR, S9_Solo_3s_GP, S9_3s_MMR, S9_3s_GP
+$import = Import-Csv "Tracker Links - RLTN Links.csv" -header Name, Tracker, '1s_MMR', '2s_MMR', 'Solo_3s_MMR', '3s_MMR'
 
 $index = 0
 $total = $import.Count
@@ -26,27 +25,22 @@ foreach ($line in $import)
 
     $data = $tracker.tostring() -split "`r`n" | Select-String "name:"
     
-    $line.S9_1s_MMR = GetRank("name: 'Ranked Duel 1v1'") ($data)
-    $line.S9_2s_MMR = GetRank("name: 'Ranked Doubles 2v2'") ($data)
-    $line.S9_Solo_3s_MMR = GetRank("name: 'Ranked Solo Standard 3v3'") ($data)
-    $line.S9_3s_MMR = GetRank("name: 'Ranked Standard 3v3'") ($data)
+    $line.'1s_MMR' = GetRank("name: 'Ranked Duel 1v1'") ($data)
+    $line.'2s_MMR' = GetRank("name: 'Ranked Doubles 2v2'") ($data)
+    $line.Solo_3s_MMR = GetRank("name: 'Ranked Solo Standard 3v3'") ($data)
+    $line.'3s_MMR' = GetRank("name: 'Ranked Standard 3v3'") ($data)
 	
-	if($line.S9_1s_MMR -eq 100 -and $line.S9_2s_MMR -eq 100 -and $line.S9_Solo_3s_MMR -eq 100 -and $line.S9_3s_MMR -eq 100){
+	if($line.'1s_MMR' -eq '' -and $line.'2s_MMR' -eq '' -and $line.Solo_3s_MMR -eq '' -and $line.'3s_MMR' -eq ''){
 		#couldn't find stats, either bad tracker link or some error in attempting to fetch the site. Try again
 		$tracker = Invoke-WebRequest -Uri $line.Tracker
 
 		$data = $tracker.tostring() -split "`r`n" | Select-String "name:"
 		
-		$line.S9_1s_MMR = GetRank("name: 'Ranked Duel 1v1'") ($data)
-		$line.S9_2s_MMR = GetRank("name: 'Ranked Doubles 2v2'") ($data)
-		$line.S9_Solo_3s_MMR = GetRank("name: 'Ranked Solo Standard 3v3'") ($data)
-		$line.S9_3s_MMR = GetRank("name: 'Ranked Standard 3v3'") ($data)
+		$line.'1s_MMR' = GetRank("name: 'Ranked Duel 1v1'") ($data)
+		$line.'2s_MMR' = GetRank("name: 'Ranked Doubles 2v2'") ($data)
+		$line.Solo_3s_MMR = GetRank("name: 'Ranked Solo Standard 3v3'") ($data)
+		$line.'3s_MMR' = GetRank("name: 'Ranked Standard 3v3'") ($data)
 	}
-	
-    $line.S9_1s_GP = 0
-    $line.S9_2s_GP = 0
-    $line.S9_Solo_3s_GP = 0
-    $line.S9_3s_GP = 0
 
     $index++
     $index.ToString() + "/" + $total + " completed"
