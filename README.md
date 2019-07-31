@@ -15,13 +15,3 @@ through the list of players. The files by default will be named according to the
 RUNNING:
 An easy way to run the script is to right click the file and select "Run with PowerShell". 
 I'd also recommend setting up a Windows Task Scheduler schedule for it to automatically run each day. Currently each scrape of the website will have a random 10-30 second delay before the next scrape begins. This is to help conceal the fact that it's a scraper and not a human hitting their website.
-
-
-Players whose names need fixed after running:
-
-Classé
-Baba—Yetu#1987
-๑w๑#1038
-Érid#0001
-Kiimmmiiii☆#1423
-🛦 Jet 🛦#8754
