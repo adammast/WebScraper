@@ -53,5 +53,4 @@ $endTime = (Get-Date)
 
 'Total Elapsed Time: {0:hh} hrs {0:mm} mins {0:ss} secs' -f ($endTime-$startTime)
 
-$now = get-date -format g
 $import | Export-Csv -Path "Scrapes/$((Get-Date).ToString('yyyy-MM-dd_HH-mm-ss'))_RLTN.csv" -NoTypeInformation

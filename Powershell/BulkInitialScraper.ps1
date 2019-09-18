@@ -35,7 +35,7 @@ foreach ($line in $import)
 
     $max = ($duelRatings.Length, $doubleRatings.Length, $soloStandardRatings.Length, $standardRatings.Length | Measure-Object -Maximum).Maximum
 
-    $fileName = "Scrapes/DE Initial Pull.csv"
+    $fileName = "Scrapes/$((Get-Date).ToString('yyyy-MM-dd_HH-mm-ss')) Initial Pull.csv"
     for ($i=0; $i -le $max - 1; $i++){
         $duelRating = If ($duelRatings.Length -gt 1 -and $duelRatings.Length - 1 -ge $i) {$duelRatings[$i]} Else {''}
         $doubleRating = If ($doubleRatings.Length -gt 1 -and $doubleRatings.Length - 1 -ge $i) {$doubleRatings[$i]} Else {''}
