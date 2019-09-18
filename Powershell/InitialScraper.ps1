@@ -1,7 +1,8 @@
-$import = Import-Csv "Tracker Links.csv" -header Name, Tracker
+$import = Import-Csv "Tracker Links.csv" -header Id, Name, Tracker
 
 foreach ($line in $import)
 {
+    $id = $line.Id
     $name = $line.Name
     $trackerLink = $line.Tracker
     $uri = $trackerLink.substring(0, 45) + "mmr/" + $trackerLink.substring(45)
@@ -32,14 +33,14 @@ foreach ($line in $import)
     $max = ($duelRatings.Length, $doubleRatings.Length, $soloStandardRatings.Length, $standardRatings.Length | Measure-Object -Maximum).Maximum
 
     $fileName = "Scrapes/" + $name + " Initial Pull.csv"
-    Add-Content -Path $fileName -Value "Name, Tracker, 1s_MMR, 2s_MMR, Solo_3s_MMR, 3s_MMR"
+    Add-Content -Path $fileName -Value "RSC Id, Name, Tracker, 1s_MMR, 2s_MMR, Solo_3s_MMR, 3s_MMR"
     for ($i=0; $i -le $max - 1; $i++){
         $duelRating = If ($duelRatings.Length -gt 1 -and $duelRatings.Length - 1 -ge $i) {$duelRatings[$i]} Else {100}
         $doubleRating = If ($doubleRatings.Length -gt 1 -and $doubleRatings.Length - 1 -ge $i) {$doubleRatings[$i]} Else {100}
         $soloStandardRating = If ($soloStandardRatings.Length -gt 1 -and $soloStandardRatings.Length - 1 -ge $i) {$soloStandardRatings[$i]} Else {100}
         $standardRating = If ($standardRatings.Length -gt 1 -and $standardRatings.Length - 1 -ge $i) {$standardRatings[$i]} Else {100}
 
-        $string = $name + ", " + $trackerLink + ", " + $duelRating + ", " + $doubleRating + ", " + $soloStandardRating + ", " + $standardRating
+        $string = $id + ", " + $name + ", " + $trackerLink + ", " + $duelRating + ", " + $doubleRating + ", " + $soloStandardRating + ", " + $standardRating
         Add-Content -Path $fileName -Value $string
     }
 }

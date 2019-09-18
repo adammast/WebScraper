@@ -12,7 +12,7 @@ Function GetRank([string]$rankSearchString, $data)
     Return ''
 }
 
-$import = Import-Csv "Tracker Links - RLTN Links.csv" -header Name, Tracker, '1s_MMR', '2s_MMR', 'Solo_3s_MMR', '3s_MMR'
+$import = Import-Csv "Tracker Links - RLTN Links.csv" -header Id, Name, Tracker, '1s_MMR', '2s_MMR', 'Solo_3s_MMR', '3s_MMR'
 
 $index = 0
 $total = $import.Count

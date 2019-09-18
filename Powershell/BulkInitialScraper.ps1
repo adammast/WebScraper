@@ -1,10 +1,11 @@
-$import = Import-Csv "Tracker Links.csv" -header Name, Tracker
+$import = Import-Csv "Tracker Links.csv" -header Id, Name, Tracker
 
 $index = 0
 $total = $import.Count
 
 foreach ($line in $import)
 {
+    $id = $line.Id
     $name = $line.Name
     $trackerLink = $line.Tracker
     $uri = $trackerLink.substring(0, 45) + "mmr/" + $trackerLink.substring(45)
@@ -41,7 +42,7 @@ foreach ($line in $import)
         $soloStandardRating = If ($soloStandardRatings.Length -gt 1 -and $soloStandardRatings.Length - 1 -ge $i) {$soloStandardRatings[$i]} Else {''}
         $standardRating = If ($standardRatings.Length -gt 1 -and $standardRatings.Length - 1 -ge $i) {$standardRatings[$i]} Else {''}
 
-        $string = $name + ", " + $trackerLink + ", " + $duelRating + ", " + $doubleRating + ", " + $soloStandardRating + ", " + $standardRating
+        $string = $id, + ", " + $name + ", " + $trackerLink + ", " + $duelRating + ", " + $doubleRating + ", " + $soloStandardRating + ", " + $standardRating
         Add-Content -Path $fileName -Value $string
     }
 
