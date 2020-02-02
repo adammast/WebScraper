@@ -2,6 +2,8 @@ $import = Import-Csv "Tracker Links.csv" -header Id, Name, Tracker
 
 $index = 0
 $total = $import.Count
+$dateTime = (Get-Date).ToString('yyyy-MM-dd_HH-mm-ss')
+
 
 foreach ($line in $import)
 {
@@ -35,14 +37,14 @@ foreach ($line in $import)
 
     $max = ($duelRatings.Length, $doubleRatings.Length, $soloStandardRatings.Length, $standardRatings.Length | Measure-Object -Maximum).Maximum
 
-    $fileName = "Scrapes/$((Get-Date).ToString('yyyy-MM-dd_HH-mm-ss')) Initial Pull.csv"
+    $fileName = "Scrapes/$dateTime Initial Pull.csv"
     for ($i=0; $i -le $max - 1; $i++){
         $duelRating = If ($duelRatings.Length -gt 1 -and $duelRatings.Length - 1 -ge $i) {$duelRatings[$i]} Else {''}
         $doubleRating = If ($doubleRatings.Length -gt 1 -and $doubleRatings.Length - 1 -ge $i) {$doubleRatings[$i]} Else {''}
         $soloStandardRating = If ($soloStandardRatings.Length -gt 1 -and $soloStandardRatings.Length - 1 -ge $i) {$soloStandardRatings[$i]} Else {''}
         $standardRating = If ($standardRatings.Length -gt 1 -and $standardRatings.Length - 1 -ge $i) {$standardRatings[$i]} Else {''}
 
-        $string = $id, + ", " + $name + ", " + $trackerLink + ", " + $duelRating + ", " + $doubleRating + ", " + $soloStandardRating + ", " + $standardRating
+        $string = $id + ", " + $name + ", " + $trackerLink + ", " + $duelRating + ", " + $doubleRating + ", " + $soloStandardRating + ", " + $standardRating
         Add-Content -Path $fileName -Value $string
     }
 
